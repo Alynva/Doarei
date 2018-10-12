@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Doarei</string>
+    <string name="ipt_user_hint">Usuário</string>
+    <string name="ipt_pass_hint">Senha</string>
+    <string name="btn_login_text">LOGIN</string>
+    <string name="lnk_signup_text">Não sou cadastrado</string>
 </resources>
