@@ -4,4 +4,20 @@
     <string name="ipt_pass_hint">Senha</string>
     <string name="btn_login_text">LOGIN</string>
     <string name="lnk_signup_text">Não sou cadastrado</string>
+    <string name="btn_back_text"><![CDATA[<]]></string>
+    <string name="label_account_type_text">Me declaro como</string>
+    <string name="label_name_text">Nome</string>
+    <string name="ipt_hint_name_text">Nome completo</string>
+    <string name="label_cpf_text">CPF</string>
+    <string name="ipt_hint_cpf_text">999.999.999-99</string>
+    <string name="label_age_text">Idade</string>
+    <string name="ipt_hint_age_text">Data de nascimento</string>
+    <string name="label_adress_text">Endereço</string>
+    <string name="label_phone_text">Telefone</string>
+    <string name="ipt_hint_adress_text">Rua, número, bairro, complemento</string>
+    <string name="ipt_hint_phone_text">(DDD) 00000-0000</string>
+    <string name="label_way2colaborate">Formas de colaboração</string>
+    <string name="label_cnpj_text">CNPJ</string>
+    <string name="ipt_hint_cnpj_text">99.999.999/9999-99</string>
+    <string name="btn_finish_account">Concluir</string>
 </resources>

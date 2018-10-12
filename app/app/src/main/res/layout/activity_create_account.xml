@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alynva.doarei.doarei.CreateAccount">
+
+    <LinearLayout
+        android:animateLayoutChanges="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_back_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_back_text"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/image_profile_size"
+                android:layout_height="@dimen/image_profile_size"
+                android:src="@color/primary"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_account_type_text"/>
+                <Spinner
+                    android:id="@+id/spinner_account_type"
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_name_text"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_name_text"
+                    android:inputType="textPersonName"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ipt_group_cpf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_cpf_text"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_cpf_text"
+                    android:inputType="number"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ipt_group_cnpj"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_cnpj_text"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_cnpj_text"
+                    android:inputType="number"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ipt_group_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_age_text"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_age_text"
+                    android:inputType="date"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_adress_text"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:hint="@string/ipt_hint_adress_text"
+                    android:inputType="textPostalAddress"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_phone_text"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_phone_text"
+                    android:inputType="phone"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_way2colaborate"/>
+                <!-- TODO: Spinner with multiple choises -->
+                <Spinner
+                    android:id="@+id/spinner_ways2colaborate"
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_finish_account"
+                android:layout_marginTop="30dp"
+                android:background="@color/accent"
+                android:textColor="@color/primary_text"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
