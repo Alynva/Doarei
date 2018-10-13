@@ -26,12 +26,12 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/ipt_user_hint"
-                android:theme="@style/EditText" />
+                android:theme="@style/EditText.Theme" />
             <EditText
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/ipt_pass_hint"
-                android:theme="@style/EditText" />
+                android:theme="@style/EditText.Theme" />
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="20dp" />

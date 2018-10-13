@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.alynva.doarei.doarei.CreateAccount">
 
     <LinearLayout
@@ -15,22 +15,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <Button
+            <ImageButton
                 android:id="@+id/btn_back_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_back_text"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_chevron_left"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/image_profile_size"
-                android:layout_height="@dimen/image_profile_size"
-                android:src="@color/primary"/>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/first_user_photo"
+                    android:layout_width="@dimen/image_profile_size"
+                    android:layout_height="@dimen/image_profile_size"
+                    android:src="@drawable/ic_person"
+                    app:civ_circle_background_color="@color/primary" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/change_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:fabSize="mini"
+                    app:elevation="0dp"
+                    app:borderWidth="0dp"
+                    android:layout_gravity="bottom|end"
+
+                    android:src="@drawable/ic_edit"
+                    app:rippleColor="@color/primary"
+                    android:tint="@color/primary"
+                    android:backgroundTint="@color/grey_50"/>
+
+            </FrameLayout>
+
 
             <Space
                 android:layout_width="wrap_content"
@@ -47,7 +71,9 @@
                 <Spinner
                     android:id="@+id/spinner_account_type"
                     android:layout_width="@dimen/form_colum_width"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,7 +88,9 @@
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_name_text"
-                    android:inputType="textPersonName"/>
+                    android:inputType="textPersonName|textCapWords"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style"/>
             </LinearLayout>
 
             <LinearLayout
@@ -78,7 +106,9 @@
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_cpf_text"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ipt_group_cnpj"
@@ -94,7 +124,9 @@
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_cnpj_text"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style"/>
             </LinearLayout>
 
             <LinearLayout
@@ -110,7 +142,9 @@
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_age_text"
-                    android:inputType="date"/>
+                    android:inputType="date"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style"/>
             </LinearLayout>
 
             <LinearLayout
@@ -127,7 +161,9 @@
                     android:maxLines="3"
                     android:ellipsize="end"
                     android:hint="@string/ipt_hint_adress_text"
-                    android:inputType="textPostalAddress"/>
+                    android:inputType="textPostalAddress"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
             </LinearLayout>
 
             <LinearLayout
@@ -142,7 +178,9 @@
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_phone_text"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
             </LinearLayout>
 
             <LinearLayout
@@ -157,7 +195,26 @@
                 <Spinner
                     android:id="@+id/spinner_ways2colaborate"
                     android:layout_width="@dimen/form_colum_width"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_password"/>
+                <EditText
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_password"
+                    android:inputType="textPassword"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
             </LinearLayout>
 
             <Button
