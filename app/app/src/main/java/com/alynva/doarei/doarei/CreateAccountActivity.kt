@@ -16,13 +16,26 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.AuthResult
+import com.google.android.gms.tasks.Task
+import android.support.annotation.NonNull
+import com.google.android.gms.tasks.OnCompleteListener
+import android.R.attr.password
+import android.support.v4.app.FragmentActivity
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 
-class CreateAccount : AppCompatActivity() {
+
+class CreateAccountActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_PHOTO = 200
+        var mAuth = FirebaseAuth.getInstance()
+        var db = FirebaseFirestore.getInstance()
     }
 
     var actual_photo_path:String? = null
@@ -39,9 +52,11 @@ class CreateAccount : AppCompatActivity() {
             capturarFoto()
         }
 
-        val adapter = ArrayAdapter.createFromResource(this, R.array.account_types, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_account_type.setAdapter(adapter)
+        btn_create_acc.setOnClickListener { criarConta() }
+
+        val adapter_account_types = ArrayAdapter.createFromResource(this, R.array.account_types, android.R.layout.simple_spinner_item)
+        adapter_account_types.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner_account_type.setAdapter(adapter_account_types)
         spinner_account_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -71,6 +86,78 @@ class CreateAccount : AppCompatActivity() {
                 // An item was selected. You can retrieve the selected item using
                 // parent.getItemAtPosition(pos)
             }
+        }
+    }
+
+    private fun criarConta() {
+        val email = ipt_email.text.toString()
+        val password = ipt_pass.text.toString()
+
+
+        val tipo = spinner_account_type.selectedItem.toString()
+        val nome = ipt_name.text.toString()
+        val cpf = ipt_cpf.text.toString()
+        val age = ipt_age.text.toString()
+        val cnpj = ipt_cnpj.text.toString()
+        val adress = ipt_adress.text.toString()
+        val phone = ipt_phone.text.toString()
+
+        var isTipo1 = tipo == resources.getStringArray(R.array.account_types).get(0)
+        var isTipo2 = tipo == resources.getStringArray(R.array.account_types).get(1)
+
+        if (nome.isBlank() || (isTipo1 && (cpf.isBlank() || age.isBlank())) || (isTipo2 && cnpj.isBlank()) || adress.isBlank() || phone.isBlank()) {
+            Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val auth_user = mAuth.currentUser
+
+
+                        val bd_user = HashMap<String, Any>()
+                        bd_user.put("tipo", tipo)
+                        bd_user.put("nome", nome)
+                        bd_user.put("email", email)
+                        if (isTipo1) {
+                            bd_user.put("cpf", cpf)
+                            bd_user.put("age", age)
+                        } else if (isTipo2) {
+                            bd_user.put("cnpj", cnpj)
+                        }
+                        bd_user.put("adress", adress)
+                        bd_user.put("phone", phone)
+
+                        db.collection("users")
+                                .add(bd_user)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Usuário registrado :)", Toast.LENGTH_LONG).show()
+                                    startMainActivity()
+                                }.addOnFailureListener {
+                                    exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                                }
+                    } else {
+                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    }
+
+                    // ...
+                }
+    }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val currentUser = mAuth.getCurrentUser()
+        if (currentUser != null) {
+            startMainActivity()
         }
     }
 

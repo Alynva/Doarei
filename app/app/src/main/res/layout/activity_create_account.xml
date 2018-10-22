@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.alynva.doarei.doarei.CreateAccount">
+    tools:context="com.alynva.doarei.doarei.CreateAccountActivity">
 
     <LinearLayout
         android:animateLayoutChanges="true"
@@ -85,10 +85,29 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_name_text"/>
                 <EditText
+                    android:id="@+id/ipt_name"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_name_text"
                     android:inputType="textPersonName|textCapWords"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_email_text"/>
+                <EditText
+                    android:id="@+id/ipt_email"
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_email_text"
+                    android:inputType="textEmailAddress"
                     android:theme="@style/EditText.Theme"
                     style="@style/EditText.Style"/>
             </LinearLayout>
@@ -103,6 +122,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_cpf_text"/>
                 <EditText
+                    android:id="@+id/ipt_cpf"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_cpf_text"
@@ -121,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_cnpj_text"/>
                 <EditText
+                    android:id="@+id/ipt_cnpj"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_cnpj_text"
@@ -139,6 +160,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_age_text"/>
                 <EditText
+                    android:id="@+id/ipt_age"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_age_text"
@@ -156,6 +178,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_adress_text"/>
                 <EditText
+                    android:id="@+id/ipt_adress"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
@@ -175,6 +198,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_phone_text"/>
                 <EditText
+                    android:id="@+id/ipt_phone"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_phone_text"
@@ -209,6 +233,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_password"/>
                 <EditText
+                    android:id="@+id/ipt_pass"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/ipt_hint_password"
@@ -218,6 +243,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_create_acc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_finish_account"

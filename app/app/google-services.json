@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "31106379403",
+    "firebase_url": "https://doarei-ufscar.firebaseio.com",
+    "project_id": "doarei-ufscar",
+    "storage_bucket": "doarei-ufscar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31106379403:android:5ad69577449a79e3",
+        "android_client_info": {
+          "package_name": "com.alynva.doarei.doarei"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31106379403-vvebn42387j3d2okn6eoscfsr1huuqtd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alynva.doarei.doarei",
+            "certificate_hash": "533e040a1f79824179182cdd6b7d01c4ada46c2f"
+          }
+        },
+        {
+          "client_id": "31106379403-4dkvgjd9c92ecvim83ahsgr4eved4nc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKI8l_YGjY2FKMWFzQFxjwOZHZnLuu6CM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31106379403-4dkvgjd9c92ecvim83ahsgr4eved4nc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
