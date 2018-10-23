@@ -48,19 +48,21 @@ class LoginActivity : AppCompatActivity() {
     private fun loginFirebase() {
         val email = ipt_login_user.text.toString()
         val password = ipt_login_pass.text.toString()
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        val user = mAuth.currentUser
-                        startMainActivity()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                    }
+        if (!email.isBlank() && !password.isBlank()) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            val user = mAuth.currentUser
+                            startMainActivity()
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        }
 
-                    // ...
-                }
+                        // ...
+                    }
+        }
     }
 
     private fun startMainActivity() {
