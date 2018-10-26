@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alynva.doarei.doarei.LoginActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/logo_d" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+            <EditText
+                android:id="@+id/ipt_login_user"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/ipt_user_hint"
+                android:inputType="textEmailAddress"
+                android:theme="@style/EditText.Theme" />
+            <EditText
+                android:id="@+id/ipt_login_pass"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/ipt_pass_hint"
+                android:inputType="textPassword"
+                android:theme="@style/EditText.Theme" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_login_text"
+                android:background="@color/primary"
+                android:textColor="@android:color/white"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/new_account_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lnk_signup_text"
+                android:textColor="@color/accent"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+</ScrollView>

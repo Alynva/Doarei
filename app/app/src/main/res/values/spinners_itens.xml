@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="account_types">
+        <item>Pessoa física</item>
+        <item>Pessoa jurídica</item>
+    </string-array>
+    <string-array name="ways2colaborate">
+        <item>Livro</item>
+        <item>Sangue</item>
+        <item>Cabelo</item>
+        <item>Brinquedo</item>
+        <item>Roupa</item>
+        <item>Alimento</item>
+        <item>Móveis</item>
+        <item>Ração</item>
+        <item>Dinheiro</item>
+        <item>Trabalho Voluntário</item>
+        <item>Medula Óssea</item>
+        <item>Calçado</item>
+        <item>Eletrodomésticos</item>
+        <item>Produtos de Higiene/Limpeza</item>
+        <item>Material Escolar</item>
+        <item>Outros</item>
+    </string-array>
+</resources>
