@@ -19,14 +19,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.AuthResult
-import com.google.android.gms.tasks.Task
-import android.support.annotation.NonNull
-import com.google.android.gms.tasks.OnCompleteListener
-import android.R.attr.password
-import android.support.v4.app.FragmentActivity
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -34,11 +26,11 @@ class CreateAccountActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_PHOTO = 200
-        var mAuth = FirebaseAuth.getInstance()
+        var mAuth = FirebaseAuth.getInstance()!!
         var db = FirebaseFirestore.getInstance()
     }
 
-    var actual_photo_path:String? = null
+    private var actualPhotoPath:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +46,9 @@ class CreateAccountActivity : AppCompatActivity() {
 
         btn_create_acc.setOnClickListener { criarConta() }
 
-        val adapter_account_types = ArrayAdapter.createFromResource(this, R.array.account_types, android.R.layout.simple_spinner_item)
-        adapter_account_types.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner_account_type.setAdapter(adapter_account_types)
+        val adapterAccountTypes = ArrayAdapter.createFromResource(this, R.array.account_types, android.R.layout.simple_spinner_item)
+        adapterAccountTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner_account_type.adapter = adapterAccountTypes
         spinner_account_type.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -102,8 +94,8 @@ class CreateAccountActivity : AppCompatActivity() {
         val adress = ipt_adress.text.toString()
         val phone = ipt_phone.text.toString()
 
-        var isTipo1 = tipo == resources.getStringArray(R.array.account_types).get(0)
-        var isTipo2 = tipo == resources.getStringArray(R.array.account_types).get(1)
+        val isTipo1 = tipo == resources.getStringArray(R.array.account_types)[0]
+        val isTipo2 = tipo == resources.getStringArray(R.array.account_types)[1]
 
         if (nome.isBlank() || (isTipo1 && (cpf.isBlank() || age.isBlank())) || (isTipo2 && cnpj.isBlank()) || adress.isBlank() || phone.isBlank()) {
             Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
@@ -114,24 +106,24 @@ class CreateAccountActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        val auth_user = mAuth.currentUser
+                        val authUser = mAuth.currentUser
 
 
-                        val bd_user = HashMap<String, Any>()
-                        bd_user.put("tipo", tipo)
-                        bd_user.put("nome", nome)
-                        bd_user.put("email", email)
+                        val bdUser = HashMap<String, Any>()
+                        bdUser.put("tipo", tipo)
+                        bdUser.put("nome", nome)
+                        bdUser.put("email", email)
                         if (isTipo1) {
-                            bd_user.put("cpf", cpf)
-                            bd_user.put("age", age)
+                            bdUser.put("cpf", cpf)
+                            bdUser.put("age", age)
                         } else if (isTipo2) {
-                            bd_user.put("cnpj", cnpj)
+                            bdUser.put("cnpj", cnpj)
                         }
-                        bd_user.put("adress", adress)
-                        bd_user.put("phone", phone)
+                        bdUser.put("adress", adress)
+                        bdUser.put("phone", phone)
 
                         db.collection("users")
-                                .add(bd_user)
+                                .add(bdUser)
                                 .addOnSuccessListener {
                                     Toast.makeText(this, "Usuário registrado :)", Toast.LENGTH_LONG).show()
                                     startMainActivity()
@@ -156,42 +148,42 @@ class CreateAccountActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val currentUser = mAuth.getCurrentUser()
+        val currentUser = mAuth.currentUser
         if (currentUser != null) {
             startMainActivity()
         }
     }
 
     private fun capturarFoto() {
-        val intent_photo = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val intentPhoto = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-        if (intent_photo.resolveActivity(getPackageManager()) != null) {
-            val photo_file = MontaArquivo()
-            val photo_uri = FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}.fileprovider", photo_file)
-            intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, photo_uri)
-            startActivityForResult(intent_photo, REQUEST_PHOTO)
+        if (intentPhoto.resolveActivity(packageManager) != null) {
+            val photoFile = montaArquivo()
+            val photoUri = FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}.fileprovider", photoFile)
+            intentPhoto.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            startActivityForResult(intentPhoto, REQUEST_PHOTO)
         } else
             Toast.makeText(this, "Não é possível tirar uma foto.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun MontaArquivo(): File {
-        val file_name = "${System.currentTimeMillis()}"
+    private fun montaArquivo(): File {
+        val fileName = "${System.currentTimeMillis()}"
         val dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val photo_file = File.createTempFile(file_name, ".png", dir)
+        val photoFile = File.createTempFile(fileName, ".png", dir)
 
-        actual_photo_path = photo_file.absolutePath
+        actualPhotoPath = photoFile.absolutePath
 
-        return photo_file
+        return photoFile
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        Toast.makeText(this, "Image recebida ${resultCode} ${REQUEST_PHOTO} ${Activity.RESULT_OK}", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Image recebida $resultCode $REQUEST_PHOTO ${Activity.RESULT_OK}", Toast.LENGTH_LONG).show()
         if (requestCode == REQUEST_PHOTO && resultCode == Activity.RESULT_OK) {
-            val photo_file = File(actual_photo_path)
+            val photoFile = File(actualPhotoPath)
 
-            var bitmap = if (photo_file.exists()) {
-                BitmapFactory.decodeFile(photo_file.absolutePath)
+            var bitmap = if (photoFile.exists()) {
+                BitmapFactory.decodeFile(photoFile.absolutePath)
             } else {
                 data?.extras?.get("data") as Bitmap
             }
@@ -202,7 +194,7 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun verificaRotacao(bitmap: Bitmap?): Bitmap? {
-        val ei = ExifInterface(actual_photo_path)
+        val ei = ExifInterface(actualPhotoPath)
         val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
 
         return when (orientation) {
@@ -210,13 +202,13 @@ class CreateAccountActivity : AppCompatActivity() {
                 rotateImage(bitmap, 90F)
 
             ExifInterface.ORIENTATION_ROTATE_180 ->
-                rotateImage(bitmap, 180F);
+                rotateImage(bitmap, 180F)
 
             ExifInterface.ORIENTATION_ROTATE_270 ->
-                rotateImage(bitmap, 270F);
+                rotateImage(bitmap, 270F)
 
             else ->
-                bitmap;
+                bitmap
 
         }
     }

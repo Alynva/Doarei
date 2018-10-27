@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        new_account_link.setOnClickListener() {
+        new_account_link.setOnClickListener {
             val intent = Intent(this, CreateAccountActivity::class.java)
             startActivity(intent)
         }
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val currentUser = mAuth.getCurrentUser()
+        val currentUser = mAuth.currentUser
         if (currentUser != null) {
             startMainActivity()
         }
