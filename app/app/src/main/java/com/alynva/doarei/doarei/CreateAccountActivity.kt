@@ -117,6 +117,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
 
                         val bdUser = HashMap<String, Any>()
+                        bdUser.put("uid", authUser?.uid!!)
                         bdUser.put("tipo", tipo)
                         bdUser.put("nome", nome)
                         bdUser.put("email", email)
