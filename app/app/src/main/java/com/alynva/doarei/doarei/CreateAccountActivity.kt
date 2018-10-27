@@ -101,6 +101,9 @@ class CreateAccountActivity : AppCompatActivity() {
         val isTipo1 = tipo == resources.getStringArray(R.array.account_types)[0]
         val isTipo2 = tipo == resources.getStringArray(R.array.account_types)[1]
 
+        {
+            TODO("Aprimorar a validação do formulário")
+        }
         if (nome.isBlank() || (isTipo1 && (cpf.isBlank() || age.isBlank())) || (isTipo2 && cnpj.isBlank()) || adress.isBlank() || phone.isBlank()) {
             Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
             return
@@ -134,6 +137,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
                     } else {
                         Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        TODO("Refinar mensagem de erro.")
                     }
 
                     // ...
@@ -147,6 +151,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     startMainActivity()
                 }.addOnFailureListener { exception ->
             Toast.makeText(this, "Não foi possível registrar o usuário. $exception", Toast.LENGTH_LONG).show()
+            TODO("Refinar mensagem de erro.")
         }
     }
 
