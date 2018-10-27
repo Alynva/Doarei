@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 
 class CreateAccountActivity : AppCompatActivity() {
@@ -28,6 +30,7 @@ class CreateAccountActivity : AppCompatActivity() {
         const val REQUEST_PHOTO = 200
         var mAuth = FirebaseAuth.getInstance()!!
         var db = FirebaseFirestore.getInstance()
+        var storage = FirebaseStorage.getInstance()
     }
 
     private var actualPhotoPath:String? = null
@@ -121,6 +124,14 @@ class CreateAccountActivity : AppCompatActivity() {
                         }
                         bdUser.put("adress", adress)
                         bdUser.put("phone", phone)
+
+                        val storageRef = storage.getReference()
+                        val file : Uri = Uri.fromFile(File(actualPhotoPath))
+                        val imageRef = storageRef.child("profile_pictures/${authUser?.uid}")
+                        val uploadTask = imageRef.putFile(file)
+                        uploadTask.addOnFailureListener {
+                            exception -> Toast.makeText(this, "Não foi possível fazer upload da imagem. $exception", Toast.LENGTH_SHORT).show()
+                        }
 
                         db.collection("users")
                                 .add(bdUser)
