@@ -133,14 +133,15 @@ class CreateAccountActivity : AppCompatActivity() {
                             exception -> Toast.makeText(this, "Não foi possível fazer upload da imagem. $exception", Toast.LENGTH_SHORT).show()
                         }
 
+
                         db.collection("users")
                                 .add(bdUser)
                                 .addOnSuccessListener {
-                                    Toast.makeText(this, "Usuário registrado :)", Toast.LENGTH_LONG).show()
                                     startMainActivity()
                                 }.addOnFailureListener {
-                                    exception: java.lang.Exception -> Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                                    exception -> Toast.makeText(this, "Não foi possível registrar o usuário. $exception", Toast.LENGTH_LONG).show()
                                 }
+
                     } else {
                         Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                     }
