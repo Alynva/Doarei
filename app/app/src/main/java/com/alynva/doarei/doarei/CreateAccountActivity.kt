@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
 import com.google.firebase.firestore.FirebaseFirestore
@@ -125,22 +126,11 @@ class CreateAccountActivity : AppCompatActivity() {
                         bdUser.put("adress", adress)
                         bdUser.put("phone", phone)
 
-                        val storageRef = storage.getReference()
-                        val file : Uri = Uri.fromFile(File(actualPhotoPath))
-                        val imageRef = storageRef.child("profile_pictures/${authUser?.uid}")
-                        val uploadTask = imageRef.putFile(file)
-                        uploadTask.addOnFailureListener {
-                            exception -> Toast.makeText(this, "Não foi possível fazer upload da imagem. $exception", Toast.LENGTH_SHORT).show()
+                        if (actualPhotoPath !== null) {
+                            uploadProfilePicture(authUser)
                         }
 
-
-                        db.collection("users")
-                                .add(bdUser)
-                                .addOnSuccessListener {
-                                    startMainActivity()
-                                }.addOnFailureListener {
-                                    exception -> Toast.makeText(this, "Não foi possível registrar o usuário. $exception", Toast.LENGTH_LONG).show()
-                                }
+                        saveDataOnDB(bdUser)
 
                     } else {
                         Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
@@ -148,6 +138,26 @@ class CreateAccountActivity : AppCompatActivity() {
 
                     // ...
                 }
+    }
+
+    private fun saveDataOnDB(bdUser: HashMap<String, Any>) {
+        db.collection("users")
+                .add(bdUser)
+                .addOnSuccessListener {
+                    startMainActivity()
+                }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Não foi possível registrar o usuário. $exception", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun uploadProfilePicture(authUser: FirebaseUser?) {
+        val storageRef = storage.getReference()
+        val file: Uri = Uri.fromFile(File(actualPhotoPath))
+        val imageRef = storageRef.child("profile_pictures/${authUser?.uid}")
+        val uploadTask = imageRef.putFile(file)
+        uploadTask.addOnFailureListener { exception ->
+            Toast.makeText(this, "Não foi possível fazer upload da imagem. $exception", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun startMainActivity() {
