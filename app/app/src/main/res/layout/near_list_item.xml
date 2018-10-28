@@ -33,11 +33,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_item_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nome da Pessoa ou Organização"
                 android:textSize="20sp"/>
             <TextView
+                android:id="@+id/tv_item_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Descrição ou interesses"/>
