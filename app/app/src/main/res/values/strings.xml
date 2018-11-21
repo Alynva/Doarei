@@ -11,7 +11,7 @@
     <string name="ipt_hint_cpf_text">999.999.999–99</string>
     <string name="label_age_text">Idade</string>
     <string name="ipt_hint_age_text">dd/mm/aaaa</string>
-    <string name="label_adress_text">Endereço</string>
+    <string name="label_adress_text">Localização</string>
     <string name="label_phone_text">Telefone</string>
     <string name="ipt_hint_adress_text">Rua, número, bairro, complemento</string>
     <string name="ipt_hint_phone_text">(DDD) 00000–0000</string>

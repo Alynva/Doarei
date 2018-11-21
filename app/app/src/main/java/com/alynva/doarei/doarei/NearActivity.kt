@@ -67,7 +67,7 @@ class NearActivity : AppCompatActivity() {
                         // This continuation runs on either success or failure, but if the task
                         // has failed then getResult() will throw an Exception which will be
                         // propagated down.
-                        return task.result.data as String
+                        return task.result?.data as String
                     }
                 })
     }

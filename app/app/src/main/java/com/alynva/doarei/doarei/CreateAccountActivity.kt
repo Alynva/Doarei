@@ -1,29 +1,41 @@
 package com.alynva.doarei.doarei
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.location.Location
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.okhttp.internal.Internal.logger
 
+private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 class CreateAccountActivity : AppCompatActivity() {
 
@@ -47,6 +59,9 @@ class CreateAccountActivity : AppCompatActivity() {
         change_photo.setOnClickListener {
             capturarFoto()
         }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        obtemLocalizacao()
 
         btn_create_acc.setOnClickListener { criarConta() }
 
@@ -82,6 +97,34 @@ class CreateAccountActivity : AppCompatActivity() {
                 // An item was selected. You can retrieve the selected item using
                 // parent.getItemAtPosition(pos)
             }
+        }
+    }
+
+    private fun obtemLocalizacao(){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            checkPermission();
+        }
+
+        fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    val latitude =  location?.latitude
+                    val longitude = location?.longitude
+
+                    ipt_adress.setKeyListener(null);
+                    ipt_adress.setText("${latitude}, ${longitude}")
+                }.addOnFailureListener { e ->
+                    Log.e("Location", "$e")
+                }
+    }
+    private fun checkPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                           ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        ){//Can add more as per requirement
+
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),
+                        123);
         }
     }
 
