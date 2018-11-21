@@ -6,11 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.near_list_item.view.*
 
-/**
- * Created by Alynva on 28/10/2018.
- */
-
-class NearAdapter(val nearEntities: List<NearEntity>) : RecyclerView.Adapter<NearAdapter.ViewHolder>() {
+class NearAdapter(private val nearEntities: List<NearEntity>) : RecyclerView.Adapter<NearAdapter.ViewHolder>() {
 
     // Método responsável por inflar as views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

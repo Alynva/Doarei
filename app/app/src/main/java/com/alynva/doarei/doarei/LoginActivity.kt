@@ -11,7 +11,7 @@ import android.widget.Toast
 class LoginActivity : AppCompatActivity() {
 
     companion object {
-        var mAuth = FirebaseAuth.getInstance()
+        var mAuth = FirebaseAuth.getInstance()!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            val user = mAuth.currentUser
+                            // val user = mAuth.currentUser
                             startMainActivity()
                         } else {
                             // If sign in fails, display a message to the user.

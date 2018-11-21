@@ -1,7 +1,6 @@
 package com.alynva.doarei.doarei
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,7 +32,6 @@ import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.okhttp.internal.Internal.logger
 
 private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -103,7 +101,7 @@ class CreateAccountActivity : AppCompatActivity() {
     private fun obtemLocalizacao(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            checkPermission();
+            checkPermission()
         }
 
         fusedLocationClient.lastLocation
@@ -111,7 +109,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     val latitude =  location?.latitude
                     val longitude = location?.longitude
 
-                    ipt_adress.setKeyListener(null);
+                    ipt_adress.keyListener = null
                     ipt_adress.setText("${latitude}, ${longitude}")
                 }.addOnFailureListener { e ->
                     Log.e("Location", "$e")
@@ -124,7 +122,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
                 ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),
-                        123);
+                        123)
         }
     }
 
@@ -200,7 +198,7 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun uploadProfilePicture(authUser: FirebaseUser?) {
-        val storageRef = storage.getReference()
+        val storageRef = storage.reference
         val file: Uri = Uri.fromFile(File(actualPhotoPath))
         val imageRef = storageRef.child("profile_pictures/${authUser?.uid}")
         val uploadTask = imageRef.putFile(file)

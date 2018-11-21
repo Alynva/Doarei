@@ -7,20 +7,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.google.firebase.functions.FirebaseFunctions
 import kotlinx.android.synthetic.main.activity_near.*
-import com.google.android.gms.tasks.Continuation
-import com.google.firebase.functions.HttpsCallableResult
 import com.google.android.gms.tasks.Task
-import java.util.*
 import kotlin.collections.HashMap
 
 
 class NearActivity : AppCompatActivity() {
 
     companion object {
-        val mFunctions = FirebaseFunctions.getInstance();
+        val mFunctions = FirebaseFunctions.getInstance()!!
     }
 
-    var nearList : MutableList<NearEntity> = mutableListOf()
+    private var nearList : MutableList<NearEntity> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,14 +58,11 @@ class NearActivity : AppCompatActivity() {
         return mFunctions
                 .getHttpsCallable("helloWorld")
                 .call(data)
-                .continueWith(object : Continuation<HttpsCallableResult, String> {
-                    @Throws(Exception::class)
-                    override fun then(task: Task<HttpsCallableResult>): String {
-                        // This continuation runs on either success or failure, but if the task
-                        // has failed then getResult() will throw an Exception which will be
-                        // propagated down.
-                        return task.result?.data as String
-                    }
-                })
+                .continueWith { task ->
+                    // This continuation runs on either success or failure, but if the task
+                    // has failed then getResult() will throw an Exception which will be
+                    // propagated down.
+                    task.result?.data as String
+                }
     }
 }
