@@ -4,10 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import com.google.firebase.functions.FirebaseFunctions
 import kotlinx.android.synthetic.main.activity_near.*
 import com.google.android.gms.tasks.Task
+import org.json.JSONObject
 import kotlin.collections.HashMap
 
 
@@ -24,8 +24,21 @@ class NearActivity : AppCompatActivity() {
         setContentView(R.layout.activity_near)
 
         btnCampanha.setOnClickListener {
-            addMessage("Qualquercoisa").addOnCompleteListener {
-                task: Task<String> -> Toast.makeText(this, task.result, Toast.LENGTH_SHORT).show()
+            getNears(37.422, -122.084).addOnCompleteListener { task ->
+                val json = task.result
+                val jsonObj = JSONObject(json?.substring(json.indexOf("{"), json.lastIndexOf("}") + 1))
+                val nearJson = jsonObj.getJSONArray("pertos")
+                nearList.clear()
+                for (i in 0 until nearJson!!.length()) {
+                    val jObj = nearJson.getJSONObject(i)
+
+                    val nome = jObj.getString("nome")
+                    val adress = jObj.getString("adress")
+
+                    val entidade = NearEntity(nome, "", adress, "")
+                    nearList.add(entidade)
+                }
+                carregaLista()
             }
         }
 
@@ -48,15 +61,15 @@ class NearActivity : AppCompatActivity() {
         rvNear.addItemDecoration(dividerItemDecoration)
     }
 
-    private fun addMessage(text: String): Task<String> {
+    private fun getNears(lat: Double, long: Double): Task<String> {
         // Create the arguments to the callable function.
         val data = HashMap<String, Any>().apply {
-            put("text", text)
-            put("push", true)
+            put("lat", lat)
+            put("long", long)
         }
 
         return mFunctions
-                .getHttpsCallable("helloWorld")
+                .getHttpsCallable("get_nears")
                 .call(data)
                 .continueWith { task ->
                     // This continuation runs on either success or failure, but if the task
