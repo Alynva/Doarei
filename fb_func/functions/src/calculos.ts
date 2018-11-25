@@ -1,4 +1,4 @@
-import { degrees2radians } from "./conversoes"
+import { degrees2radians, radians2degrees } from "./conversoes"
 
 export const calculaDistancia = (ponto_1, ponto_2) => {
 	const R = 6371e3; // metres
@@ -15,4 +15,8 @@ export const calculaDistancia = (ponto_1, ponto_2) => {
 	const d = R * c; // metres
 
 	return d;
+}
+
+export const calculaAngulo = (ponto_1, ponto_2) => {
+	return radians2degrees(Math.atan2(ponto_2.lat - ponto_1.lat, ponto_2.long - ponto_1.long))
 }

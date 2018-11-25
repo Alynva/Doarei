@@ -1,12 +1,18 @@
 package com.alynva.doarei.doarei
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.Nullable
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.functions.FirebaseFunctions
 import kotlinx.android.synthetic.main.activity_near.*
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
 import kotlin.collections.HashMap
 
@@ -23,8 +29,24 @@ class NearActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_near)
 
-        btnCampanha.setOnClickListener {
-            getNears(37.422, -122.084).addOnCompleteListener { task ->
+        carregaInformacoes()
+
+        btn_mapa.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        carregaLista()
+    }
+
+    private fun carregaInformacoes() {
+        obtemLocalizacao(LocationServices.getFusedLocationProviderClient(this)) { lat, long ->
+            Toast.makeText(this, "${lat} - ${long}", Toast.LENGTH_SHORT).show()
+
+            getNears(lat, long).addOnCompleteListener { task ->
                 val json = task.result
                 val jsonObj = JSONObject(json?.substring(json.indexOf("{"), json.lastIndexOf("}") + 1))
                 val nearJson = jsonObj.getJSONArray("pertos")
@@ -34,15 +56,20 @@ class NearActivity : AppCompatActivity() {
 
                     val nome = jObj.getString("nome")
                     val adress = jObj.getString("adress")
+                    val distancia = jObj.getString("distancia")
+                    val angulo = jObj.getDouble("angulo")
+                    var image = ""
+                    if (jObj.has("picture"))
+                        image = jObj.getString("picture")
 
-                    val entidade = NearEntity(nome, "", adress, "")
+                    val entidade = NearEntity(nome, "", adress, distancia, angulo, image)
                     nearList.add(entidade)
                 }
                 carregaLista()
+            }.addOnFailureListener { err ->
+                Log.e("Erro no functions", err.toString())
             }
         }
-
-        carregaLista()
     }
 
     override fun onResume() {

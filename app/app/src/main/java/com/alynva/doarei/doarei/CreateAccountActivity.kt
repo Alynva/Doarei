@@ -1,6 +1,7 @@
 package com.alynva.doarei.doarei
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,19 +27,22 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_create_account.*
 import java.io.File
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-
-private lateinit var fusedLocationClient: FusedLocationProviderClient
+import com.google.firebase.storage.UploadTask
 
 class CreateAccountActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_PHOTO = 200
+        const val REQUEST_LOC = 201
         var mAuth = FirebaseAuth.getInstance()!!
         var db = FirebaseFirestore.getInstance()
         var storage = FirebaseStorage.getInstance()
@@ -58,8 +62,10 @@ class CreateAccountActivity : AppCompatActivity() {
             capturarFoto()
         }
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        obtemLocalizacao()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            checkPermission()
+        }
 
         btn_create_acc.setOnClickListener { criarConta() }
 
@@ -98,23 +104,23 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
-    private fun obtemLocalizacao(){
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode) {
+            REQUEST_LOC -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            checkPermission()
-        }
-
-        fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    val latitude =  location?.latitude
-                    val longitude = location?.longitude
-
-                    ipt_adress.keyListener = null
-                    ipt_adress.setText("${latitude}, ${longitude}")
-                }.addOnFailureListener { e ->
-                    Log.e("Location", "$e")
+                } else {
+                    obtemLocalizacao(LocationServices.getFusedLocationProviderClient(this)) { latitude, longitude -> setLocation(latitude, longitude) }
                 }
+            }
+        }
     }
+
+    private fun setLocation(latitude: Double?, longitude: Double?) {
+        ipt_adress.keyListener = null
+        ipt_adress.setText("${latitude}, ${longitude}")
+    }
+
     private fun checkPermission(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                            ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -122,7 +128,9 @@ class CreateAccountActivity : AppCompatActivity() {
 
                 ActivityCompat.requestPermissions(this,
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),
-                        123)
+                        REQUEST_LOC)
+        } else {
+            obtemLocalizacao(LocationServices.getFusedLocationProviderClient(this)) { latitude, longitude -> setLocation(latitude, longitude) }
         }
     }
 
@@ -158,7 +166,6 @@ class CreateAccountActivity : AppCompatActivity() {
 
 
                         val bdUser = HashMap<String, Any>()
-                        bdUser.put("uid", authUser?.uid!!)
                         bdUser.put("tipo", tipo)
                         bdUser.put("nome", nome)
                         bdUser.put("email", email)
@@ -171,29 +178,32 @@ class CreateAccountActivity : AppCompatActivity() {
                         bdUser.put("adress", adress)
                         bdUser.put("phone", phone)
 
-                        if (actualPhotoPath !== null) {
-                            uploadProfilePicture(authUser)
-                        }
+                        saveDataOnDB(authUser, bdUser)
 
-                        saveDataOnDB(bdUser)
-
+                        uploadProfilePicture(authUser)
                     } else {
+                        {
+                            TODO("Refinar mensagem de erro.")
+                        }
                         Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                        TODO("Refinar mensagem de erro.")
+
                     }
 
                     // ...
                 }
     }
 
-    private fun saveDataOnDB(bdUser: HashMap<String, Any>) {
+    private fun saveDataOnDB(authUser: FirebaseUser?, bdUser: HashMap<String, Any>) {
         db.collection("users")
-                .add(bdUser)
+                .document(authUser?.uid!!)
+                .set(bdUser)
                 .addOnSuccessListener {
                     startMainActivity()
                 }.addOnFailureListener { exception ->
+            {
+                TODO("Refinar mensagem de erro.")
+            }
             Toast.makeText(this, "Não foi possível registrar o usuário. $exception", Toast.LENGTH_LONG).show()
-            TODO("Refinar mensagem de erro.")
         }
     }
 
@@ -205,7 +215,29 @@ class CreateAccountActivity : AppCompatActivity() {
         uploadTask.addOnFailureListener { exception ->
             Toast.makeText(this, "Não foi possível fazer upload da imagem. $exception", Toast.LENGTH_SHORT).show()
         }
-    }
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful()) {
+                throw Throwable("Não é possível recuperar a url")
+            }
+
+            // Continue with the task to get the download URL
+            return@continueWithTask imageRef.getDownloadUrl()
+        }.addOnCompleteListener { task ->
+            if (!task.isSuccessful()) {
+                throw Throwable("Não é possível recuperar a url")
+                // Handle failures
+                // ...
+            }
+
+            val downloadUri = task.getResult()
+            db.collection("users")
+                .document(authUser?.uid!!)
+                .update("picture", downloadUri.toString())
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Não foi possível atualizar o banco com a imagem atual", Toast.LENGTH_SHORT).show()
+                    }
+        }
+}
 
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
@@ -288,4 +320,19 @@ class CreateAccountActivity : AppCompatActivity() {
         return Bitmap.createBitmap(source, 0, 0, source!!.width, source.height,
                 matrix, true)
     }
+}
+
+@SuppressLint("MissingPermission")
+fun obtemLocalizacao(providerClient: FusedLocationProviderClient, callback: (Double, Double) -> Unit) {
+    providerClient.lastLocation
+        .addOnSuccessListener { location: Location? ->
+            val latitude =  location?.latitude
+            val longitude = location?.longitude
+
+            if (latitude !== null && longitude !== null) {
+                callback(latitude, longitude)
+            }
+        }.addOnFailureListener { e ->
+            Log.e("Location", "$e")
+        }
 }
