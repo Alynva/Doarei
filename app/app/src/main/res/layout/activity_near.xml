@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.alynva.doarei.doarei.NearActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvNear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/llMainTabs">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/llMainTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:background="@color/primary">
+        <Button
+            android:id="@+id/btnCampanha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Campanha"
+            android:background="@android:color/transparent"
+            android:textColor="@color/primary_text"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Feed Social"
+            android:background="@android:color/transparent"
+            android:textColor="@color/primary_text"/>
+        <Button
+            android:id="@+id/btn_mapa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mapa"
+            android:background="@android:color/transparent"
+            android:textColor="@color/primary_text"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

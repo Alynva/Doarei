@@ -19,5 +19,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        val intent = Intent(this, NearActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
