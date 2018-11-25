@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.near_list_item.view.*
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.content.ContextCompat.startActivity
 
 
 
@@ -64,13 +63,13 @@ class NearAdapter(private val nearEntities: List<NearEntity>) : RecyclerView.Ada
             }
         }
 
-        fun openLink(url : String) {
+        private fun openLink(url : String) {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             itemView.context.startActivity(browserIntent)
         }
 
-        fun abrirMapa(adress: String, nome: String) {
-            val gmmIntentUri = Uri.parse("geo:0,0?q=${adress}(${nome})")
+        private fun abrirMapa(adress: String, nome: String) {
+            val gmmIntentUri = Uri.parse("geo:0,0?q=$adress($nome)")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.`package` = "com.google.android.apps.maps"
 //            if (mapIntent.resolveActivity(getPackageManager()) != null) {
@@ -78,8 +77,8 @@ class NearAdapter(private val nearEntities: List<NearEntity>) : RecyclerView.Ada
 //            }
         }
 
-        fun abrirNavegacao(adress: String) {
-            val gmmIntentUri = Uri.parse("google.navigation:q=${adress}&mode=w")
+        private fun abrirNavegacao(adress: String) {
+            val gmmIntentUri = Uri.parse("google.navigation:q=$adress&mode=w")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.`package` = "com.google.android.apps.maps"
 //            if (mapIntent.resolveActivity(getPackageManager()) != null) {

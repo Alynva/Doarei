@@ -3,7 +3,6 @@ package com.alynva.doarei.doarei
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.Nullable
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -46,7 +45,7 @@ class NearActivity : AppCompatActivity() {
 
     private fun carregaInformacoes() {
         obtemLocalizacao(LocationServices.getFusedLocationProviderClient(this)) { lat, long ->
-            Toast.makeText(this, "${lat} - ${long}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "$lat - $long", Toast.LENGTH_SHORT).show()
 
             getNears(lat, long).addOnCompleteListener { task ->
                 val json = task.result

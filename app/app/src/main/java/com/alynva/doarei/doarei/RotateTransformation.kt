@@ -1,9 +1,6 @@
 package com.alynva.doarei.doarei
 
 import android.content.Context
-import android.provider.SyncStateContract.Helpers.update
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
@@ -11,9 +8,6 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import java.security.MessageDigest
 
 
-/**
- * Created by Alynva on 25/11/2018.
- */
 class RotateTransformation(context: Context, rotateRotationAngle: Float) : BitmapTransformation(context) {
 
     private var rotateRotationAngle = 0f
