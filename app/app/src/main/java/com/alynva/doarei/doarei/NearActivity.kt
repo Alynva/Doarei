@@ -7,6 +7,8 @@ import android.support.annotation.Nullable
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.functions.FirebaseFunctions
@@ -31,15 +33,15 @@ class NearActivity : AppCompatActivity() {
 
         carregaInformacoes()
 
-        btn_mapa.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
         carregaLista()
+    }
+
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun carregaInformacoes() {
@@ -104,5 +106,26 @@ class NearActivity : AppCompatActivity() {
                     // propagated down.
                     task.result?.data as String
                 }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu to use in the action bar
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            R.id.action_atualizar -> {
+                carregaInformacoes()
+                return true
+            }
+            R.id.action_sair -> {
+                logout()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
