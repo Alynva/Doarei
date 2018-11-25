@@ -8,6 +8,9 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.near_list_item.view.*
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.content.ContextCompat.startActivity
+
+
 
 
 class NearAdapter(private val nearEntities: List<NearEntity>) : RecyclerView.Adapter<NearAdapter.ViewHolder>() {
@@ -46,6 +49,24 @@ class NearAdapter(private val nearEntities: List<NearEntity>) : RecyclerView.Ada
                     .load("https://firebasestorage.googleapis.com/v0/b/doarei-ufscar.appspot.com/o/images%2F25426.png?alt=media&token=6a82d3ca-4003-47e6-8d07-000efe4834fb")
                     .transform(RotateTransformation(itemView.context, entity.angulo.toFloat()))
                     .into(itemView.iv_direction)
+
+            if (entity.fb != "") {
+                itemView.btn_fb.visibility = View.VISIBLE
+                itemView.btn_fb.setOnClickListener { openLink(entity.fb) }
+            }
+            if (entity.tt != "") {
+                itemView.btn_tt.visibility = View.VISIBLE
+                itemView.btn_tt.setOnClickListener { openLink(entity.tt) }
+            }
+            if (entity.li != "") {
+                itemView.btn_li.visibility = View.VISIBLE
+                itemView.btn_li.setOnClickListener { openLink(entity.li) }
+            }
+        }
+
+        fun openLink(url : String) {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            itemView.context.startActivity(browserIntent)
         }
 
         fun abrirMapa(adress: String, nome: String) {

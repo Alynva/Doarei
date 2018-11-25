@@ -7,4 +7,7 @@ data class NearEntity (var nome: String,
                        val adress: String,
                        val distancia: String,
                        val angulo: Double,
-                       val photoPath: String? = null) : Serializable
+                       val fb: String = "",
+                       val tt: String = "",
+                       val li: String = "",
+                       val photoPath: String = "") : Serializable

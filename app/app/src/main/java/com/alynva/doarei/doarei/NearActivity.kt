@@ -63,8 +63,17 @@ class NearActivity : AppCompatActivity() {
                     var image = ""
                     if (jObj.has("picture"))
                         image = jObj.getString("picture")
+                    var fb = ""
+                    if (jObj.has("fb"))
+                        fb = jObj.getString("fb")
+                    var tt = ""
+                    if (jObj.has("tt"))
+                        tt = jObj.getString("tt")
+                    var li = ""
+                    if (jObj.has("li"))
+                        li = jObj.getString("li")
 
-                    val entidade = NearEntity(nome, "", adress, distancia, angulo, image)
+                    val entidade = NearEntity(nome, "", adress, distancia, angulo, fb, tt, li, image)
                     nearList.add(entidade)
                 }
                 carregaLista()

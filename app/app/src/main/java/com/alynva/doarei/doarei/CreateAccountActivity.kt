@@ -147,6 +147,21 @@ class CreateAccountActivity : AppCompatActivity() {
         val adress = ipt_adress.text.toString()
         val phone = ipt_phone.text.toString()
 
+        val fb = ipt_fb.text.toString()
+        val fb_regex = """^(?:(?:http(?:s)?:\/\/)?(?:www.)?facebook\.com\/)?([a-zA-Z0-9.]+).*$""".toRegex(RegexOption.MULTILINE)
+        val fb_result = fb_regex.find(fb)
+        val (fb_id) = fb_result!!.destructured
+
+        val tt = ipt_tt.text.toString()
+        val tt_regex = """^(?:(?:http(?:s)?:\/\/)?(?:www.)?twitter\.com\/)?([a-zA-Z0-9_]{1,15}).*$""".toRegex(RegexOption.MULTILINE)
+        val tt_result = tt_regex.find(tt)
+        val (tt_id) = tt_result!!.destructured
+
+        val li = ipt_li.text.toString()
+        val li_regex = """^(?:(?:http(?:s)?:\/\/)?(?:www.)?linkedin\.com\/)?([-a-zA-Z0-9@:%_\+.~#?&\/=]*).*$""".toRegex(RegexOption.MULTILINE)
+        val li_result = li_regex.find(li)
+        val (li_id) = li_result!!.destructured
+
         val isTipo1 = tipo == resources.getStringArray(R.array.account_types)[0]
         val isTipo2 = tipo == resources.getStringArray(R.array.account_types)[1]
 
@@ -177,6 +192,9 @@ class CreateAccountActivity : AppCompatActivity() {
                         }
                         bdUser.put("adress", adress)
                         bdUser.put("phone", phone)
+                        bdUser.put("fb", "https://www.facebook.com/$fb_id")
+                        bdUser.put("tt", "https://twitter.com/$tt_id")
+                        bdUser.put("li", "https://www.linkedin.com/$li_id")
 
                         saveDataOnDB(authUser, bdUser)
 

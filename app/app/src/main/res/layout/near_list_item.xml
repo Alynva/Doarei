@@ -59,14 +59,23 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_fb"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp"
+                    android:background="@drawable/icons8_facebook_50"/>
                 <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_tt"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp"
+                    android:background="@drawable/icons8_twitter_24"/>
                 <Button
+                    android:visibility="gone"
+                    android:id="@+id/btn_li"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp"
+                    android:background="@drawable/icons8_linkedin_24"/>
             </LinearLayout>
         </LinearLayout>
 
