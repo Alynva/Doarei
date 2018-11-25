@@ -36,14 +36,10 @@ export const get_nears = functions.https.onRequest((request, response) => {
 						const person_info = doc.data();
 						
 						const info_filtered = {
-								nome: person_info.nome,
-								email: person_info.email,
-								tipo: person_info.tipo,
-								adress: person_info.adress,
+								...person_info,
 								distancia_real: distancia,
 								distancia: distancia_convertida,
-								angulo: calculaAngulo(marco_0, localizacao),
-								picture: person_info.picture
+								angulo: calculaAngulo(marco_0, localizacao)
 							}
 						
 						pertos.push(info_filtered)
