@@ -11,7 +11,7 @@
     <string name="ipt_hint_cpf_text">999.999.999–99</string>
     <string name="label_age_text">Idade</string>
     <string name="ipt_hint_age_text">dd/mm/aaaa</string>
-    <string name="label_adress_text">Endereço</string>
+    <string name="label_adress_text">Localização</string>
     <string name="label_phone_text">Telefone</string>
     <string name="ipt_hint_adress_text">Rua, número, bairro, complemento</string>
     <string name="ipt_hint_phone_text">(DDD) 00000–0000</string>
@@ -23,4 +23,16 @@
     <string name="ipt_hint_password">Requisitado para autenticação</string>
     <string name="label_email_text">E-mail</string>
     <string name="ipt_hint_email_text">seu_email@…</string>
+    <string name="label_fb">Rede social - Facebook</string>
+    <string name="ipt_hint_fb">Usuário ou URL do Facebook</string>
+    <string name="label_tt">Rede social - Twitter</string>
+    <string name="ipt_hint_tt">Usuário ou URL do Twitter</string>
+    <string name="label_li">Rede social - LinkedIn</string>
+    <string name="ipt_hint_li">Usuário ou URL do LinkedIn</string>
+    <string name="desc_voltar">Voltar</string>
+    <string name="sair">Sair</string>
+    <string name="tab_title_campanha">Campanha</string>
+    <string name="tab_title_feed_social">Feed Social</string>
+    <string name="tab_title_mapa">Mapa</string>
+    <string name="desc_direcao">Direção até o local</string>
 </resources>

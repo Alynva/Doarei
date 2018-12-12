@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_atualizar"
+        android:title="Atualizar"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_action_refresh"
+        />
+    <item
+        android:id="@+id/action_sair"
+        android:title="Sair"
+        app:showAsAction="withText"
+        android:icon="@drawable/ic_action_exit_to_app"
+        />
+</menu>

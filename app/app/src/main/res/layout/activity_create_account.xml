@@ -20,7 +20,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_chevron_left"/>
+                android:src="@drawable/ic_chevron_left"
+                android:contentDescription="@string/desc_voltar" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -220,6 +221,60 @@
                     android:id="@+id/spinner_ways2colaborate"
                     android:layout_width="@dimen/form_colum_width"
                     android:layout_height="wrap_content"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_fb"/>
+                <EditText
+                    android:id="@+id/ipt_fb"
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_fb"
+                    android:inputType="phone"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_tt"/>
+                <EditText
+                    android:id="@+id/ipt_tt"
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_tt"
+                    android:inputType="phone"
+                    android:theme="@style/EditText.Theme"
+                    style="@style/EditText.Style" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_li"/>
+                <EditText
+                    android:id="@+id/ipt_li"
+                    android:layout_width="@dimen/form_colum_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ipt_hint_li"
+                    android:inputType="phone"
                     android:theme="@style/EditText.Theme"
                     style="@style/EditText.Style" />
             </LinearLayout>
